@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# See the README file in the repo.
+
+#set -x
+set -e
+
+IFN="$1"
+OFN="$2"
+
+if [[ -z "$IFN" ]]; then echo "Need an input filename."; exit 1; fi
+if [[ -z "$OFN" ]]; then echo "Need an output filename."; exit 1; fi
+if touch "$OFN"; then
+  true;
+else
+  echo "Unable to create output file: $OFN"
+  exit 1;
+fi
+
+DPI=300
+JPEGQUALITY=100
+
+# use part of the input filename in temp dir name (for debugging).
+PREFIX=$(basename "$IFN" | tr -cd '[A-Za-z0-9]' | cut -c 1-10)
+
+WDIR=$(mktemp -d --suffix="-${PREFIX}")
+if touch "$WDIR"/testfile; then
+  echo "Created working directory: $WDIR"
+else
+  echo "Error creating working dir: $WDIR"
+  exit 1;
+fi
+
+# rasterize to 300 dpi images.
+pdftoppm -f 1 -l 10 -cropbox -r $DPI "$IFN" "$WDIR"/page
+
+# -------------------------------------------------------------------
+# This is the magic. -normalize automagically stretches the contrast.
+# -------------------------------------------------------------------
+for fn in "$WDIR"/page*.ppm; do
+  convert $fn -normalize -quality $JPEGQUALITY "$fn".norm.jpg;
+done
+
+# make a PDF out of the new images. Put them losslessly into the PDF.
+img2pdf -o "$OFN" "$WDIR"/*.norm.jpg
+
+echo "Success. OK to remove working dir $WDIR (your system will likely autoclean the directory)."
+echo "Success. Output PDF is:" "$OFN"
+
