@@ -1,10 +1,12 @@
 PURPOSE
 
-Make PDFs easier to read when printed, by increasing the contrast, especially
-by deepening the dark colors used for text. Intended to be general and "safe"
-so that any PDF you want to print can be passed through this filter. You can
-draw an analogy between this script and browser extensions that automatically
-convert web sites to dark mode such as darkreader.
+Make text in PDFs easier to read when printed by deepening the dark colors used
+for text. You can draw an analogy between this script and browser extensions
+that automatically convert web sites to dark mode such as darkreader.
+
+PREREQUISITES
+
+sudo apt install poppler-utils img2pdf imagemagick
 
 HOW IT WORKS
 
@@ -64,8 +66,8 @@ Output PDFs can be large: Approx 1 MB per page.
   which makes them quite large (approx 1MB per page).
 
   The output files are intended to be printed, not archived. The output PDFs
-  *are* intended to have "jagginess"/"blockiness" aka aliasing
-  indistinguishable from the input PDF.
+  *are* intended to be high-resolution, meaning "jagginess"/"blockiness" aka
+  aliasing virtually indistinguishable from the input PDF.
 
   Since the output PDF is essentially *images* of each page in the likely
   vector-format input PDF, to compensate, each output page is rasterized at
@@ -87,5 +89,9 @@ High temporary disk usage: About 16 MB per page.
   the script's total runtime is not noticeable on a spinning hard disk, and the
   effect is drastically smaller on an SSD.
 
-eof
+NORMALIZATION, LEVEL, THRESHOLDING ETC
 
+TODO: Add this section.
+For now: see https://imagemagick.org/Usage/color_mods/#normalize
+
+eof

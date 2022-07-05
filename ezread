@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # See the README file in the repo.
+# Prerequisites: sudo apt install poppler-utils img2pdf imagemagick
 
 #set -x
 set -e
