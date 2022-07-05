@@ -33,7 +33,7 @@ else
 fi
 
 # rasterize to 300 dpi images.
-pdftoppm -f 1 -l 10 -cropbox -r $DPI "$IFN" "$WDIR"/page
+pdftoppm -cropbox -r $DPI "$IFN" "$WDIR"/page
 
 # -------------------------------------------------------------------
 # This is the magic. -normalize automagically stretches the contrast.
