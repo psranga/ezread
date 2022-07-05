@@ -42,16 +42,26 @@ low-color, low-density displays such as ebook readers.
 
 ## TECHNICAL REASON FOR EXISTENCE
 
-TLDR: displays display fundamentally differently than printers print.
+TLDR: displays display differently than printers print.
 
-This has to do with the underlying technical differences between how
-non-LCD/CRT displays. TLDR: an LCD/CRT can set the *intensity* of every single
-sub-pixel (RGB) of every single pixel, in addition to whether subpixel is on or
-not.
+An LCD/CRT can set the *intensity* of every single
+sub-pixel (RGB) of every single pixel by adjusting the brightness of that
+subpixel's LED, in addition to whether subpixel is on or not.
 
-But other output devices, especially printers (inkjet and laser) *CANNOT* set
-the intensity of every subpixel. They *may* be able vary the *quantity* of ink,
-but *NOT* the color of the ink itself.
+But printers (inkjet and laser) cannot adjust the intensity of the color at
+every subpixel as well a display can. I think some models vary the quantity of
+ink at a subpixel, which helps somewhat, but printers primarily overlay color
+inks, and use dithering.
+
+Therefore, ultimately, best results are achieved during printing, by
+matching the colors to be printed with the inks the printer has. Since black
+used to be a common color, all printers come with separate black ink.
+
+Grays can be especially challenging for printers: Most printer algorithms will
+opt to use dithering (i.e., reducing effective resolution) to produce gray
+text. Or they may use color toner/ink in addition to black to get the shade of
+gray. The second technique won't work if you print in monochrome mode to save
+color toner/ink.
 
 Printers try to do their best by mixing colors to achieve the closest match.
 More formally, the color gamut of printers is much smaller than the color gamut
@@ -101,5 +111,11 @@ pixel per color -- its a binary decision) laid down at a pixel.
 
 TODO: Add this section.
 For now: see https://imagemagick.org/Usage/color_mods/#normalize
+
+Experiments were performed on a Canon ink tank printer, and a Brother laser
+printer. The OS whether Mac, Windows, or Linux didn't make a huge difference.
+The printer firmware can make some difference because each manufacturer uses
+different heuristics to balance speed, color accuracy, and ink usage, but the
+PDF file itself is the main factor.
 
 eof
