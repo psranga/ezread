@@ -1,14 +1,23 @@
-PURPOSE
+## PURPOSE
 
 Make text in PDFs easier to read when printed by deepening the dark colors used
 for text. You can draw an analogy between this script and browser extensions
 that automatically convert web sites to dark mode such as darkreader.
 
-PREREQUISITES
+## INSTALLING
 
-sudo apt install poppler-utils img2pdf imagemagick
+1. Install pre-requisite packages, for the command-line programs pdftoppm,
+img2pdf, and convert:
 
-HOW IT WORKS
+    `sudo apt install poppler-utils img2pdf imagemagick`
+
+2. Copy the file 'ezread' in this repo to somewhere on your computer.
+
+## USAGE
+
+    ezread input.pdf output.pdf
+
+## HOW IT WORKS
 
 TLDR: contrast-stretching on rasterized page images.
 
@@ -20,19 +29,18 @@ TLDR: contrast-stretching on rasterized page images.
 
 3. Combining page images into a PDF: img2pdf to losslessly make a PDF.
 
-REASON FOR EXISTENCE
+## REASON FOR EXISTENCE
 
 I've started coming across more and more PDFs that have poor readability when
-*printed on paper* (both color inkjet and monochrome laser).  I prefer to print
-PDFs vs reading on the screen (I mark up pages etc).  I wrote this script
-because I don't think this trend is going to end.
+*printed on paper* (both color inkjet and monochrome laser). I prefer to print
+PDFs vs reading on the screen.
 
 This script fixes PDFs that have low contrast text: this will be most apparent
 as hard-to-read text on paper, when such PDFs are printed. May be apparent on
 low/medium quality displays, displays with bad gamma settings, as well as
 low-color, low-density displays such as ebook readers.
 
-TECHNICAL REASONS FOR WHY SUCH A SCRIPT IS INEVITABLY NEEDED
+## TECHNICAL REASON FOR EXISTENCE
 
 TLDR: displays display fundamentally differently than printers print.
 
@@ -53,14 +61,14 @@ they use fixed-color ink/toner. That is why photo printers use many more
 fixed-colored inks (home printers use three colors + black, printers that seven
 colored inks exist. See the the Canon product page).
 
-[Need to recheck]: IIUC inkjet printers can vary the amount of a ink laid down
+**Need to recheck:** IIUC inkjet printers can vary the amount of a ink laid down
 at pixel.  I think laser printers cannot even vary the *amount* of toner at a
 pixel per color -- its a binary decision) laid down at a pixel.
 
 
-CAVEATS
+## CAVEATS
 
-Output PDFs can be large: Approx 1 MB per page.
+* Output PDFs can be large: Approx 1 MB per page.
 
   The input PDF's pages are rasterized at high dpi (300 dpi) and high quality,
   which makes them quite large (approx 1MB per page).
@@ -78,7 +86,7 @@ Output PDFs can be large: Approx 1 MB per page.
   magnifying glass on my printers, so I left it at 300 dpi for now, because it
   seems to be a more "round" number wrt printer specs.
 
-High temporary disk usage: About 16 MB per page.
+* High temporary disk usage: About 16 MB per page.
 
   I opted to use uncompressed ppm files, except in the last stage which uses
   JPEG, to reduce CPU usage in encoding/decoding of intermediate files. Fix:
@@ -89,7 +97,7 @@ High temporary disk usage: About 16 MB per page.
   the script's total runtime is not noticeable on a spinning hard disk, and the
   effect is drastically smaller on an SSD.
 
-NORMALIZATION, LEVEL, THRESHOLDING ETC
+## NORMALIZATION, LEVEL, THRESHOLDING ETC
 
 TODO: Add this section.
 For now: see https://imagemagick.org/Usage/color_mods/#normalize
